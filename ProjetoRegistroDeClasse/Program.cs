@@ -42,6 +42,9 @@ namespace MyNamespace
                     }
                     catch (FormatException)
                     {
+                        Clear();
+                        WriteLine("<<<<<<<< MENU >>>>>>>>");
+                        Menu(opcoes);
                         WriteLine("Entrada inválida. Por favor, insira um número.");
                     }
                 }
@@ -1546,12 +1549,61 @@ namespace MyNamespace
         private static void salvar()
         {
             Clear();
-            if (alunos.Count == 0 && turmas.Count == 0)
+            WriteLine("=============================================");
+            WriteLine("=           SALVAR INFORMAÇÕES             =");
+            WriteLine("=============================================");
+            WriteLine();
+
+            bool temTurmas = turmas.Count > 0;
+            bool temAlunos = alunos.Count > 0;
+
+            if (!temTurmas && !temAlunos)
             {
-                WriteLine("Não há dados para salvar.");
-                WriteLine("Pressione qualquer tecla para voltar ao menu...");
-                ReadKey();
-                return;
+                WriteLine("Não há dados para ser salvos. Salvar o programa sem nenhum dado pode acabar reescrevendo os dados atualmente salvos e causando a perda de todos os arquivos.");
+                WriteLine("Tem certeza que quer proceder? (s/n)");
+
+                string resposta = ReadLine().ToLower();
+                if (resposta != "s")
+                {
+                    WriteLine("Operação cancelada.");
+                    WriteLine("Pressione qualquer tecla para voltar ao menu...");
+                    ReadKey();
+                    Clear();
+                    WriteLine("<<<<<<<< MENU >>>>>>>>");
+                    return;
+                }
+            }
+            else if (!temTurmas)
+            {
+                WriteLine("Você ainda não registrou nenhuma turma para ser salva!");
+                WriteLine("Tem certeza que quer proceder? (s/n)");
+
+                string resposta = ReadLine().ToLower();
+                if (resposta != "s")
+                {
+                    WriteLine("Operação cancelada.");
+                    WriteLine("Pressione qualquer tecla para voltar ao menu...");
+                    ReadKey();
+                    Clear();
+                    WriteLine("<<<<<<<< MENU >>>>>>>>");
+                    return;
+                }
+            }
+            else if (!temAlunos)
+            {
+                WriteLine("Você ainda não registrou nenhum aluno para ser salvo!");
+                WriteLine("Tem certeza que quer proceder? (s/n)");
+
+                string resposta = ReadLine().ToLower();
+                if (resposta != "s")
+                {
+                    WriteLine("Operação cancelada.");
+                    WriteLine("Pressione qualquer tecla para voltar ao menu...");
+                    ReadKey();
+                    Clear();
+                    WriteLine("<<<<<<<< MENU >>>>>>>>");
+                    return;
+                }
             }
 
             try
@@ -1561,31 +1613,48 @@ namespace MyNamespace
                     Directory.CreateDirectory(@"C:\Dados");
                 }
 
-                File.WriteAllLines(@"C:\Dados\alunos.txt", alunos);
-                File.WriteAllLines(@"C:\Dados\turmas.txt", turmas);
-                File.WriteAllLines(@"C:\Dados\alunoTurma.txt", alunoTurma);
-
-                List<string> numerosString = new List<string>();
-                foreach (var num in numeroAlunos)
+                StreamWriter dadosAlunos = File.CreateText(@"C:\Dados\alunos.txt");
+                foreach (var aluno in alunos)
                 {
-                    numerosString.Add(num.ToString());
+                    dadosAlunos.WriteLine(aluno);
                 }
-                File.WriteAllLines(@"C:\Dados\numeroAlunos.txt", numerosString);
+                dadosAlunos.Close();
 
-                List<string> notas1String = new List<string>();
-                List<string> notas2String = new List<string>();
-                List<string> mediasString = new List<string>();
+                StreamWriter dadosTurmas = File.CreateText(@"C:\Dados\turmas.txt");
+                foreach (var turma in turmas)
+                {
+                    dadosTurmas.WriteLine(turma);
+                }
+                dadosTurmas.Close();
+
+                StreamWriter dadosAlunoTurma = File.CreateText(@"C:\Dados\alunoTurma.txt");
+                foreach (var turma in alunoTurma)
+                {
+                    dadosAlunoTurma.WriteLine(turma);
+                }
+                dadosAlunoTurma.Close();
+
+                StreamWriter dadosNumeroAlunos = File.CreateText(@"C:\Dados\numeroAlunos.txt");
+                foreach (var numero in numeroAlunos)
+                {
+                    dadosNumeroAlunos.WriteLine(numero);
+                }
+                dadosNumeroAlunos.Close();
+
+                StreamWriter dadosNotas1 = File.CreateText(@"C:\Dados\notas1.txt");
+                StreamWriter dadosNotas2 = File.CreateText(@"C:\Dados\notas2.txt");
+                StreamWriter dadosMedias = File.CreateText(@"C:\Dados\medias.txt");
 
                 for (int i = 0; i < n1.Count; i++)
                 {
-                    notas1String.Add(n1[i].ToString());
-                    notas2String.Add(n2[i].ToString());
-                    mediasString.Add(media[i].ToString());
+                    dadosNotas1.WriteLine(n1[i]);
+                    dadosNotas2.WriteLine(n2[i]);
+                    dadosMedias.WriteLine(media[i]);
                 }
 
-                File.WriteAllLines(@"C:\Dados\notas1.txt", notas1String);
-                File.WriteAllLines(@"C:\Dados\notas2.txt", notas2String);
-                File.WriteAllLines(@"C:\Dados\medias.txt", mediasString);
+                dadosNotas1.Close();
+                dadosNotas2.Close();
+                dadosMedias.Close();
 
                 ForegroundColor = ConsoleColor.Green;
                 WriteLine("<<<<<< DADOS SALVOS COM SUCESSO! >>>>>>");
