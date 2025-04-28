@@ -353,7 +353,7 @@ namespace MyNamespace
                     }
                 }
 
-                double mediaEstudante = (nota1 + nota2) / 2;
+                double mediaEstudante = Math.Floor((nota1 + nota2) / 2 * 10) / 10;
 
                 alunos.Add(aluno);
                 numeroAlunos.Add(numeroAluno);
@@ -363,7 +363,7 @@ namespace MyNamespace
                 media.Add(mediaEstudante);
 
                 ForegroundColor = ConsoleColor.Green;
-                WriteLine($"Aluno(a) {aluno} (Nº {numeroAluno}) cadastrado(a) com sucesso na turma {turma} com média {mediaEstudante:F1}!");
+                WriteLine($"Aluno(a) {aluno} (Nº {numeroAluno}) cadastrado(a) com sucesso na turma {turma} com média {mediaEstudante}!");
                 ResetColor();
 
                 WriteLine();
@@ -1320,7 +1320,7 @@ namespace MyNamespace
 
                 if (index >= 0)
                 {
-                    WriteLine($"Aluno encontrado: {alunos[index]} (Nº {numeroAlunos[index]}) | Turma: {alunoTurma[index]} | Média Atual: {media[index]:F1}");
+                    WriteLine($"Aluno encontrado: {alunos[index]} (Nº {numeroAlunos[index]}) | Turma: {alunoTurma[index]} | Média Atual: {media[index]}");
 
                     double novaNota1 = 0, novaNota2 = 0;
 
@@ -1368,10 +1368,10 @@ namespace MyNamespace
 
                     n1[index] = novaNota1;
                     n2[index] = novaNota2;
-                    media[index] = (novaNota1 + novaNota2) / 2;
+                    media[index] = Math.Floor((novaNota1 + novaNota2) / 2 * 10) / 10;
 
                     ForegroundColor = ConsoleColor.Green;
-                    WriteLine($"Notas atualizadas com sucesso! Nova média: {media[index]:F1}");
+                    WriteLine($"Notas atualizadas com sucesso! Nova média: {media[index]}");
                     ResetColor();
                 }
 
@@ -1433,7 +1433,7 @@ namespace MyNamespace
             {
                 for (int i = 0; i < alunos.Count; i++)
                 {
-                    WriteLine($"Aluno: {alunos[i]} (Nº {numeroAlunos[i]}) | Turma: {alunoTurma[i]} | Média: {media[i]:F1}");
+                    WriteLine($"Aluno: {alunos[i]} (Nº {numeroAlunos[i]}) | Turma: {alunoTurma[i]} | Média: {media[i]}");
                 }
             }
 
@@ -1457,7 +1457,7 @@ namespace MyNamespace
             {
                 if (media[i] >= 5 && media[i] < 7)
                 {
-                    WriteLine($"Aluno: {alunos[i]} (Nº {numeroAlunos[i]}) | Turma: {alunoTurma[i]} | Média: {media[i]:F1}");
+                    WriteLine($"Aluno: {alunos[i]} (Nº {numeroAlunos[i]}) | Turma: {alunoTurma[i]} | Média: {media[i]}");
                     encontrou = true;
                 }
             }
@@ -1492,7 +1492,7 @@ namespace MyNamespace
                         ForegroundColor = ConsoleColor.Red;
                     }
 
-                    WriteLine($"Aluno: {alunos[i]} (Nº {numeroAlunos[i]}) | Turma: {alunoTurma[i]} | Média: {media[i]:F1}");
+                    WriteLine($"Aluno: {alunos[i]} (Nº {numeroAlunos[i]}) | Turma: {alunoTurma[i]} | Média: {media[i]}");
                     ResetColor();
                     encontrou = true;
                 }
@@ -1528,7 +1528,7 @@ namespace MyNamespace
                         ForegroundColor = ConsoleColor.Green;
                     }
 
-                    WriteLine($"Aluno: {alunos[i]} (Nº {numeroAlunos[i]}) | Turma: {alunoTurma[i]} | Média: {media[i]:F1}");
+                    WriteLine($"Aluno: {alunos[i]} (Nº {numeroAlunos[i]}) | Turma: {alunoTurma[i]} | Média: {media[i]}");
                     ResetColor();
                     encontrou = true;
                 }
