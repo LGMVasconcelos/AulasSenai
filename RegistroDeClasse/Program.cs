@@ -100,7 +100,7 @@ namespace MyNamespace
             }
         }
 
-
+        static List<string> alunoTurma = new List<string>();
         static List<string> alunos = new List<string>();
         static List<string> turmas = new List<string>();
         static List<double> n1 = new List<double>();
@@ -225,17 +225,7 @@ namespace MyNamespace
                     }
                 }
 
-                var alunoExiste = false;
-                foreach (var a in alunos)
-                {
-                    if (a.Contains(aluno))
-                    {
-                        alunoExiste = true;
-                        break;
-                    }
-                }
-
-                if (alunoExiste)
+                if (alunos.Contains(aluno))
                 {
                     WriteLine("O nome digitado já consta em nossos registros!");
                     WriteLine("Pressione qualquer tecla para continuar...");
@@ -258,17 +248,7 @@ namespace MyNamespace
                     }
                 }
 
-                var turmaExiste = false;
-                foreach (var t in turmas)
-                {
-                    if (t == turma)
-                    {
-                        turmaExiste = true;
-                        break;
-                    }
-                }
-
-                if (turmaExiste == false)
+                if (!turmas.Contains(turma))
                 {
                     WriteLine("A turma especificada não existe! Cadastre a turma primeiro.");
                     WriteLine("Pressione qualquer tecla para continuar...");
@@ -280,17 +260,17 @@ namespace MyNamespace
 
                 while (true)
                 {
-                    WriteLine("Digite a 1° nota do aluno (entre 0 e 100):");
+                    WriteLine("Digite a 1ª nota do aluno (entre 0 e 10):");
                     try
                     {
                         nota1 = ToDouble(ReadLine());
-                        if (nota1 >= 0 && nota1 <= 100)
+                        if (nota1 >= 0 && nota1 <= 10)
                         {
                             break;
                         }
                         else
                         {
-                            WriteLine("A nota deve valer entre 0 e 100!");
+                            WriteLine("A nota deve estar entre 0 e 10!");
                         }
                     }
                     catch (FormatException)
@@ -301,17 +281,17 @@ namespace MyNamespace
 
                 while (true)
                 {
-                    WriteLine("Digite a 2° nota do aluno (entre 0 e 100):");
+                    WriteLine("Digite a 2ª nota do aluno (entre 0 e 10):");
                     try
                     {
                         nota2 = ToDouble(ReadLine());
-                        if (nota2 >= 0 && nota2 <= 100)
+                        if (nota2 >= 0 && nota2 <= 10)
                         {
                             break;
                         }
                         else
                         {
-                            WriteLine("A nota deve valer entre 0 e 100!");
+                            WriteLine("A nota deve estar entre 0 e 10!");
                         }
                     }
                     catch (FormatException)
@@ -320,32 +300,17 @@ namespace MyNamespace
                     }
                 }
 
-                while (true)
-                {
-                    WriteLine($"Confirma o cadastro do(a) aluno(a) {aluno} na turma {turma}? (s/n)");
-                    string confirmacao = ReadLine();
-                    if (confirmacao.ToLower() == "s")
-                    {
-                        n1.Add(nota1);
-                        n2.Add(nota2);
-                        double mediaEstudante = (nota1 + nota2) / 2;
-                        media.Add(mediaEstudante);
-                        alunos.Add($"{aluno} - {turma}");
-                        ForegroundColor = ConsoleColor.Green;
-                        WriteLine($"Aluno(a) {aluno} cadastrado(a) com sucesso na turma {turma}!");
-                        ResetColor();
-                        break;
-                    }
-                    else if (confirmacao.ToLower() == "n")
-                    {
-                        WriteLine("Operação cancelada.");
-                        return;
-                    }
-                    else
-                    {
-                        WriteLine("Entrada inválida! Tente novamente!");
-                    }
-                }
+                double mediaEstudante = (nota1 + nota2) / 2;
+
+                alunos.Add(aluno);
+                alunoTurma.Add(turma);
+                n1.Add(nota1);
+                n2.Add(nota2);
+                media.Add(mediaEstudante);
+
+                ForegroundColor = ConsoleColor.Green;
+                WriteLine($"Aluno(a) {aluno} cadastrado(a) com sucesso na turma {turma} com média {mediaEstudante:F1}!");
+                ResetColor();
 
                 WriteLine();
                 WriteLine("Deseja adicionar mais alunos?");
@@ -383,7 +348,6 @@ namespace MyNamespace
             WriteLine("<<<<<<<< MENU >>>>>>>>");
         }
 
-
         private static void remocaoTurma()
         {
             Clear();
@@ -411,7 +375,7 @@ namespace MyNamespace
 
             if (index >= 0)
             {
-                bool turmaAssociada = alunos.Any(a => a.Contains($" - {turma}"));
+                bool turmaAssociada = alunoTurma.Contains(turma);
 
                 if (turmaAssociada)
                 {
@@ -421,11 +385,19 @@ namespace MyNamespace
                         string confirmacao = ReadLine();
                         if (confirmacao.ToLower() == "s")
                         {
+                            for (int i = 0; i < alunoTurma.Count; i++)
+                            {
+                                if (alunoTurma[i] == turma)
+                                {
+                                    alunoTurma[i] = "[Turma excluída]";
+                                }
+                            }
                             break;
                         }
                         else if (confirmacao.ToLower() == "n")
                         {
-                            WriteLine("Operação cancelada.");
+                            Clear();
+                            WriteLine("Operação cancelada.\n");
                             return;
                         }
                         else
@@ -475,11 +447,11 @@ namespace MyNamespace
                 }
             }
 
-            int index = alunos.FindIndex(a => a.Contains(aluno));
+            int index = alunos.FindIndex(a => a == aluno);
 
             if (index >= 0)
             {
-                WriteLine($"O aluno que será removido é: {alunos[index]}");
+                WriteLine($"O aluno que será removido é: {alunos[index]} da turma {alunoTurma[index]}");
                 while (true)
                 {
                     WriteLine("Confirma a remoção? (s/n)");
@@ -488,6 +460,11 @@ namespace MyNamespace
                     if (confirmacao.ToLower() == "s")
                     {
                         alunos.RemoveAt(index);
+                        alunoTurma.RemoveAt(index);
+                        n1.RemoveAt(index);
+                        n2.RemoveAt(index);
+                        media.RemoveAt(index);
+
                         ForegroundColor = ConsoleColor.Green;
                         WriteLine("Aluno removido com sucesso!");
                         ResetColor();
@@ -495,7 +472,8 @@ namespace MyNamespace
                     }
                     else if (confirmacao.ToLower() == "n")
                     {
-                        WriteLine("Operação cancelada.");
+                        Clear();
+                        WriteLine("Operação cancelada.\n");
                         return;
                     }
                     else
@@ -516,7 +494,6 @@ namespace MyNamespace
             WriteLine("<<<<<<<< MENU >>>>>>>>");
         }
 
-
         private static void modificarTurma()
         {
             Clear();
@@ -524,72 +501,69 @@ namespace MyNamespace
             WriteLine("=             MODIFICAR TURMA               =");
             WriteLine("=============================================");
             WriteLine();
-            WriteLine("Digite o nome da turma que deseja modificar: ");
-            string turmaAtual = ReadLine();
-            if (turmaAtual == "")
+
+            string turmaAtual;
+            while (true)
             {
-                WriteLine("Nenhuma turma foi digitada. Operação cancelada.");
-                return;
-            }
-            int index = -1;
-            for (int i = 0; i < turmas.Count; i++)
-            {
-                if (turmas[i] == turmaAtual)
+                WriteLine("Digite o nome da turma que deseja modificar: ");
+                turmaAtual = ReadLine();
+                if (!string.IsNullOrWhiteSpace(turmaAtual))
                 {
-                    index = i;
                     break;
                 }
+                else
+                {
+                    WriteLine("O nome da turma não pode estar vazio. Por favor, insira um nome válido.");
+                }
             }
+
+            int index = turmas.FindIndex(t => t == turmaAtual);
 
             if (index >= 0)
             {
                 WriteLine($"A turma que será modificada é: {turmas[index]}");
-                WriteLine("Digite o novo nome para a turma: ");
-                string novoNome = ReadLine();
 
-                var repetido = turmas.Any(x => x == novoNome);
-                if (repetido)
-                {
-                    WriteLine("O novo nome digitado já consta em nossos registros!");
-                    return;
-                }
-
+                string novoNome;
                 while (true)
                 {
-                    WriteLine($"Confirma a modificação da turma '{turmaAtual}' para '{novoNome}'? (s/n)");
-                    string confirmacao = ReadLine();
-                    if (confirmacao.ToLower() == "s")
+                    WriteLine("Digite o novo nome para a turma: ");
+                    novoNome = ReadLine();
+                    if (!string.IsNullOrWhiteSpace(novoNome))
                     {
-                        turmas[index] = novoNome;
-
-                        for (int i = 0; i < alunos.Count; i++)
-                        {
-                            if (alunos[i].Contains($" - {turmaAtual}"))
-                            {
-                                alunos[i] = alunos[i].Replace($" - {turmaAtual}", $" - {novoNome}");
-                            }
-                        }
-
-                        ForegroundColor = ConsoleColor.Green;
-                        WriteLine($"Turma '{turmaAtual}' modificada com sucesso para '{novoNome}'!");
-                        ResetColor();
                         break;
-                    }
-                    else if (confirmacao.ToLower() == "n")
-                    {
-                        WriteLine("Operação cancelada.");
-                        return;
                     }
                     else
                     {
-                        WriteLine("Entrada inválida! Tente novamente!");
+                        WriteLine("O nome da nova turma não pode estar vazio. Por favor, insira um nome válido.");
                     }
+                }
+
+                if (!turmas.Contains(novoNome))
+                {
+                    turmas[index] = novoNome;
+
+                    for (int i = 0; i < alunoTurma.Count; i++)
+                    {
+                        if (alunoTurma[i] == turmaAtual)
+                        {
+                            alunoTurma[i] = novoNome;
+                        }
+                    }
+
+                    ForegroundColor = ConsoleColor.Green;
+                    WriteLine($"Turma '{turmaAtual}' modificada com sucesso para '{novoNome}'!");
+                    ResetColor();
+                }
+                else
+                {
+                    WriteLine("O novo nome digitado já consta em nossos registros!");
                 }
             }
             else
             {
                 WriteLine("O nome digitado não foi encontrado em nossos registros!");
             }
+
             WriteLine();
             WriteLine("Pressione qualquer tecla para voltar ao menu...");
             ReadKey();
@@ -620,14 +594,11 @@ namespace MyNamespace
                 }
             }
 
-            int index = alunos.FindIndex(a => a.StartsWith(aluno + " - "));
+            int index = alunos.FindIndex(a => a == aluno);
 
             if (index >= 0)
             {
-                string turmaAtual = alunos[index].Substring(alunos[index].IndexOf(" - ") + 3);
-
-                WriteLine();
-                WriteLine($"O aluno que será editado é {aluno} da turma {turmaAtual}");
+                WriteLine($"O aluno que será editado é {alunos[index]} da turma {alunoTurma[index]}");
                 WriteLine();
                 WriteLine("Qual informação você deseja editar? ");
                 string[] informacoes = { "1 - Turma que o aluno está inserido", "2 - Nome do aluno" };
@@ -674,28 +645,10 @@ namespace MyNamespace
 
                         if (turmas.Contains(novaTurma))
                         {
-                            while (true)
-                            {
-                                WriteLine($"Confirma a modificação da turma do aluno '{aluno}' para '{novaTurma}'? (s/n)");
-                                string confirmacao = ReadLine();
-                                if (confirmacao.ToLower() == "s")
-                                {
-                                    alunos[index] = $"{aluno} - {novaTurma}";
-                                    ForegroundColor = ConsoleColor.Green;
-                                    WriteLine($"Turma do aluno {aluno} atualizada para {novaTurma} com sucesso!");
-                                    ResetColor();
-                                    break;
-                                }
-                                else if (confirmacao.ToLower() == "n")
-                                {
-                                    WriteLine("Operação cancelada.");
-                                    return;
-                                }
-                                else
-                                {
-                                    WriteLine("Entrada inválida! Tente novamente!");
-                                }
-                            }
+                            alunoTurma[index] = novaTurma;
+                            ForegroundColor = ConsoleColor.Green;
+                            WriteLine($"Turma do aluno {alunos[index]} atualizada para {novaTurma} com sucesso!");
+                            ResetColor();
                         }
                         else
                         {
@@ -719,34 +672,16 @@ namespace MyNamespace
                             }
                         }
 
-                        if (alunos.Any(a => a.StartsWith(novoNome + " - ")))
+                        if (!alunos.Contains(novoNome))
                         {
-                            WriteLine("Este nome já consta em nossos registros!");
+                            alunos[index] = novoNome;
+                            ForegroundColor = ConsoleColor.Green;
+                            WriteLine($"Nome do aluno atualizado para {novoNome} com sucesso!");
+                            ResetColor();
                         }
                         else
                         {
-                            while (true)
-                            {
-                                WriteLine($"Confirma a modificação do nome do aluno '{aluno}' para '{novoNome}'? (s/n)");
-                                string confirmacao = ReadLine();
-                                if (confirmacao.ToLower() == "s")
-                                {
-                                    alunos[index] = $"{novoNome} - {turmaAtual}";
-                                    ForegroundColor = ConsoleColor.Green;
-                                    WriteLine($"Nome do aluno atualizado para {novoNome} com sucesso!");
-                                    ResetColor();
-                                    break;
-                                }
-                                else if (confirmacao.ToLower() == "n")
-                                {
-                                    WriteLine("Operação cancelada.");
-                                    return;
-                                }
-                                else
-                                {
-                                    WriteLine("Entrada inválida! Tente novamente!");
-                                }
-                            }
+                            WriteLine("Este nome já consta em nossos registros!");
                         }
                         break;
                 }
@@ -762,7 +697,6 @@ namespace MyNamespace
             Clear();
             WriteLine("<<<<<<<< MENU >>>>>>>>");
         }
-
 
         private static void modificarNota()
         {
@@ -789,104 +723,63 @@ namespace MyNamespace
                     }
                 }
 
-                int index = alunos.FindIndex(a => a.StartsWith(aluno + " - "));
+                int index = alunos.FindIndex(a => a == aluno);
 
                 if (index >= 0)
                 {
+                    WriteLine($"Aluno encontrado: {alunos[index]} | Turma: {alunoTurma[index]} | Média Atual: {media[index]:F1}");
+
+                    double novaNota1 = 0, novaNota2 = 0;
+
                     while (true)
                     {
-                        WriteLine($"Aluno encontrado: {alunos[index]}");
-                        WriteLine("Qual nota deseja modificar?");
-                        WriteLine("1 - Primeira nota");
-                        WriteLine("2 - Segunda nota");
-
-                        int escolha = 0;
-                        while (true)
+                        WriteLine("Digite a nova 1ª nota (entre 0 e 10):");
+                        try
                         {
-                            try
+                            novaNota1 = ToDouble(ReadLine());
+                            if (novaNota1 >= 0 && novaNota1 <= 10)
                             {
-                                escolha = ToInt32(ReadLine());
-                                if (escolha == 1 || escolha == 2)
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    WriteLine("Por favor, escolha 1 ou 2.");
-                                }
+                                break;
                             }
-                            catch (FormatException)
+                            else
                             {
-                                WriteLine("Entrada inválida. Por favor, insira um número.");
+                                WriteLine("A nota deve estar entre 0 e 10!");
                             }
                         }
-
-                        if (escolha == 1)
+                        catch (FormatException)
                         {
-                            while (true)
-                            {
-                                WriteLine($"Nota atual: {n1[index]}");
-                                WriteLine("Digite a nova nota (entre 0 e 100):");
-                                try
-                                {
-                                    double novaNota = ToDouble(ReadLine());
-                                    if (novaNota >= 0 && novaNota <= 100)
-                                    {
-                                        n1[index] = novaNota;
-                                        media[index] = (n1[index] + n2[index]) / 2;
-                                        ForegroundColor = ConsoleColor.Green;
-                                        WriteLine("Primeira nota modificada com sucesso!");
-                                        ResetColor();
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        WriteLine("A nota deve valer entre 0 e 100!");
-                                    }
-                                }
-                                catch (FormatException)
-                                {
-                                    WriteLine("Entrada inválida. Por favor, insira um número.");
-                                }
-                            }
-                        }
-                        else if (escolha == 2)
-                        {
-                            while (true)
-                            {
-                                WriteLine($"Nota atual: {n2[index]}");
-                                WriteLine("Digite a nova nota (entre 0 e 100):");
-                                try
-                                {
-                                    double novaNota = ToDouble(ReadLine());
-                                    if (novaNota >= 0 && novaNota <= 100)
-                                    {
-                                        n2[index] = novaNota;
-                                        media[index] = (n1[index] + n2[index]) / 2;
-                                        ForegroundColor = ConsoleColor.Green;
-                                        WriteLine("Segunda nota modificada com sucesso!");
-                                        ResetColor();
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        WriteLine("A nota deve valer entre 0 e 100!");
-                                    }
-                                }
-                                catch (FormatException)
-                                {
-                                    WriteLine("Entrada inválida. Por favor, insira um número.");
-                                }
-                            }
-                        }
-
-                        WriteLine("Deseja modificar outra nota para este aluno? (s/n)");
-                        string resposta = ReadLine();
-                        if (resposta.ToLower() != "s")
-                        {
-                            break;
+                            WriteLine("Entrada inválida. Por favor, insira um número.");
                         }
                     }
+
+                    while (true)
+                    {
+                        WriteLine("Digite a nova 2ª nota (entre 0 e 10):");
+                        try
+                        {
+                            novaNota2 = ToDouble(ReadLine());
+                            if (novaNota2 >= 0 && novaNota2 <= 10)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                WriteLine("A nota deve estar entre 0 e 10!");
+                            }
+                        }
+                        catch (FormatException)
+                        {
+                            WriteLine("Entrada inválida. Por favor, insira um número.");
+                        }
+                    }
+
+                    n1[index] = novaNota1;
+                    n2[index] = novaNota2;
+                    media[index] = (novaNota1 + novaNota2) / 2;
+
+                    ForegroundColor = ConsoleColor.Green;
+                    WriteLine($"Notas atualizadas com sucesso! Nova média: {media[index]:F1}");
+                    ResetColor();
                 }
                 else
                 {
@@ -907,7 +800,6 @@ namespace MyNamespace
             Clear();
             WriteLine("<<<<<<<< MENU >>>>>>>>");
         }
-
 
         private static void exibirTurmas()
         {
@@ -950,9 +842,9 @@ namespace MyNamespace
             }
             else
             {
-                foreach (var aluno in alunos)
+                for (int i = 0; i < alunos.Count; i++)
                 {
-                    WriteLine(aluno);
+                    WriteLine($"Aluno: {alunos[i]} | Turma: {alunoTurma[i]} | Média: {media[i]:F1}");
                 }
             }
 
@@ -972,16 +864,16 @@ namespace MyNamespace
             WriteLine();
 
             bool encontrou = false;
-            for (int i = 0; i < media.Count && i < alunos.Count; i++)
+            for (int i = 0; i < media.Count; i++)
             {
-                if (media[i] >= 50 && media[i] <= 69.9)
+                if (media[i] >= 5 && media[i] < 7)
                 {
-                    WriteLine($"Aluno: {alunos[i]} | Média: {Math.Round(media[i], 1)}");
+                    WriteLine($"Aluno: {alunos[i]} | Turma: {alunoTurma[i]} | Média: {media[i]:F1}");
                     encontrou = true;
                 }
             }
 
-            if (encontrou == false)
+            if (!encontrou)
             {
                 WriteLine("Nenhum aluno em recuperação encontrado.");
             }
@@ -1002,25 +894,22 @@ namespace MyNamespace
             WriteLine();
 
             bool encontrou = false;
-            for (int i = 0; i < media.Count && i < alunos.Count; i++)
+            for (int i = 0; i < media.Count; i++)
             {
-                if (media[i] <= 49.9)
+                if (media[i] < 5)
                 {
                     if (media[i] == 0)
                     {
-                        ForegroundColor = ConsoleColor.DarkRed;
-                        WriteLine($"Aluno: {alunos[i]} | Média: {Math.Round(media[i], 1)}");
-                        ResetColor();
+                        ForegroundColor = ConsoleColor.Red;
                     }
-                    else
-                    {
-                        WriteLine($"Aluno: {alunos[i]} | Média: {Math.Round(media[i], 1)}");
-                    }
+
+                    WriteLine($"Aluno: {alunos[i]} | Turma: {alunoTurma[i]} | Média: {media[i]:F1}");
+                    ResetColor();
                     encontrou = true;
                 }
             }
 
-            if (encontrou == false)
+            if (!encontrou)
             {
                 WriteLine("Nenhum aluno reprovado encontrado.");
             }
@@ -1041,25 +930,22 @@ namespace MyNamespace
             WriteLine();
 
             bool encontrou = false;
-            for (int i = 0; i < media.Count && i < alunos.Count; i++)
+            for (int i = 0; i < media.Count; i++)
             {
-                if (media[i] >= 70)
+                if (media[i] >= 7)
                 {
-                    if (media[i] == 100)
+                    if (media[i] == 10)
                     {
                         ForegroundColor = ConsoleColor.Green;
-                        WriteLine($"Aluno: {alunos[i]} | Média: {Math.Round(media[i], 1)}");
-                        ResetColor();
                     }
-                    else
-                    {
-                        WriteLine($"Aluno: {alunos[i]} | Média: {Math.Round(media[i], 1)}");
-                    }
+
+                    WriteLine($"Aluno: {alunos[i]} | Turma: {alunoTurma[i]} | Média: {media[i]:F1}");
+                    ResetColor();
                     encontrou = true;
                 }
             }
 
-            if (encontrou == false)
+            if (!encontrou)
             {
                 WriteLine("Nenhum aluno aprovado encontrado.");
             }
@@ -1070,6 +956,7 @@ namespace MyNamespace
             Clear();
             WriteLine("<<<<<<<< MENU >>>>>>>>");
         }
+
 
         private static void salvar()
         {
@@ -1084,15 +971,14 @@ namespace MyNamespace
 
             try
             {
-                if (Directory.Exists(@"C:\Dados") == false)
+                if (!Directory.Exists(@"C:\Dados"))
                 {
                     Directory.CreateDirectory(@"C:\Dados");
                 }
 
                 File.WriteAllLines(@"C:\Dados\alunos.txt", alunos);
                 File.WriteAllLines(@"C:\Dados\turmas.txt", turmas);
-                File.WriteAllLines(@"C:\Dados\nota1.txt", n1.Select(n => n.ToString()));
-                File.WriteAllLines(@"C:\Dados\nota2.txt", n2.Select(n => n.ToString()));
+                File.WriteAllLines(@"C:\Dados\alunoTurma.txt", alunoTurma);
 
                 ForegroundColor = ConsoleColor.Green;
                 WriteLine("<<<<<< DADOS SALVOS COM SUCESSO! >>>>>>");
@@ -1106,13 +992,17 @@ namespace MyNamespace
             {
                 WriteLine("Pressione qualquer tecla para voltar ao menu...");
                 ReadKey();
+                Clear();
+                WriteLine("<<<<<<<< MENU >>>>>>>>");
             }
         }
 
         private static void carregar()
         {
             Clear();
-            if (File.Exists(@"C:\Dados\alunos.txt") == false || File.Exists(@"C:\Dados\turmas.txt") == false)
+            if (File.Exists(@"C:\Dados\alunos.txt") == false ||
+                File.Exists(@"C:\Dados\turmas.txt") == false ||
+                File.Exists(@"C:\Dados\alunoTurma.txt") == false)
             {
                 WriteLine("Os arquivos necessários para carregar os dados não foram encontrados.");
                 WriteLine("Pressione qualquer tecla para voltar ao menu...");
@@ -1122,11 +1012,23 @@ namespace MyNamespace
 
             try
             {
-                alunos = File.ReadAllLines(@"C:\Dados\alunos.txt").ToList();
-                turmas = File.ReadAllLines(@"C:\Dados\turmas.txt").ToList();
-                n1 = File.ReadAllLines(@"C:\Dados\nota1.txt").Select(double.Parse).ToList();
-                n2 = File.ReadAllLines(@"C:\Dados\nota2.txt").Select(double.Parse).ToList();
-                media = n1.Zip(n2, (nota1, nota2) => (nota1 + nota2) / 2).ToList();
+                var alunosArquivo = File.ReadAllLines(@"C:\Dados\alunos.txt");
+                for (int i = 0; i < alunosArquivo.Length; i++)
+                {
+                    alunos.Add(alunosArquivo[i]);
+                }
+
+                var turmasArquivo = File.ReadAllLines(@"C:\Dados\turmas.txt");
+                for (int i = 0; i < turmasArquivo.Length; i++)
+                {
+                    turmas.Add(turmasArquivo[i]);
+                }
+
+                var alunoTurmaArquivo = File.ReadAllLines(@"C:\Dados\alunoTurma.txt");
+                for (int i = 0; i < alunoTurmaArquivo.Length; i++)
+                {
+                    alunoTurma.Add(alunoTurmaArquivo[i]);
+                }
 
                 ForegroundColor = ConsoleColor.Green;
                 WriteLine("<<<<<<< LEITURA REALIZADA COM SUCESSO! >>>>>>>");
@@ -1140,8 +1042,9 @@ namespace MyNamespace
             {
                 WriteLine("Pressione qualquer tecla para voltar ao menu...");
                 ReadKey();
+                Clear();
+                WriteLine("<<<<<<<< MENU >>>>>>>>");
             }
         }
-
     }
 }
