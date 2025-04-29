@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using static System.Console;
 using static System.Convert;
 
@@ -21,7 +22,7 @@ namespace MyNamespace
             WriteLine("<<<<<<<< MENU >>>>>>>>");
             string[] opcoes = { "1 - Cadastrar turma", "2 - Cadastrar alunos", "3 - Remover turma", "4 - Remover alunos", "5 - Modificar turma",
         "6 - Modificar aluno","7 - Modificar Notas", "8 - Exibir Turmas", "9 - Exibir alunos", "10 - Exibir alunos de recuperação",
-        "11 - Exibir alunos reprovados", "12 - Exibir alunos aprovados", "13 - Salvar informações", "14 - Carregar informações" };
+        "11 - Exibir alunos reprovados", "12 - Exibir alunos aprovados", "13 - Salvar informações", "14 - Carregar informações", "15 - Sair" };
             int opcao = 0;
             while (true)
             {
@@ -92,6 +93,9 @@ namespace MyNamespace
                         break;
                     case 14:
                         carregar();
+                        break;
+                    case 15:
+                        sair();
                         break;
                     default:
                         Clear();
@@ -993,62 +997,98 @@ namespace MyNamespace
                 {
                     case 1:
                         string novaTurma;
-                        while (true)
+                        if (turmas.Count == 0)
                         {
-                            WriteLine("Insira a nova turma para qual o(a) aluno(a) será inserido(a):");
-                            novaTurma = ReadLine();
-                            if (!string.IsNullOrWhiteSpace(novaTurma))
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                WriteLine("O nome da turma não pode estar vazio. Por favor, insira um nome válido.");
-                            }
+                            WriteLine("Não existe nenhuma turma para qual o aluno possa ser transferido!");
+                            WriteLine("Clique qualquer tecla pra voltar!");
+                            ReadKey();
+                            Clear();
+                            return;
                         }
-
-                        if (turmas.Contains(novaTurma))
+                        else if (turmas.Count == 1)
                         {
-                            bool nomeRepetido = false;
-                            for (int i = 0; i < alunos.Count; i++)
+                            var primeiroIndice = turmas[0];
+                            WriteLine($"A única turma para qual o aluno pode ser transferido é {primeiroIndice}. Quer transferir o aluno para essa turma? (s/n)");
+                            string escolha = ReadLine().ToLower();
+                            if (escolha == "s")
                             {
-                                if (i != index && alunos[i] == alunos[index] && alunoTurma[i] == novaTurma)
-                                {
-                                    nomeRepetido = true;
-                                    break;
-                                }
+                                alunoTurma[index] = primeiroIndice;
                             }
-
-                            bool numeroRepetido = false;
-                            for (int i = 0; i < numeroAlunos.Count; i++)
+                            else if(escolha == "n")
                             {
-                                if (i != index && numeroAlunos[i] == numeroAlunos[index] && alunoTurma[i] == novaTurma)
-                                {
-                                    numeroRepetido = true;
-                                    break;
-                                }
-                            }
-
-                            if (nomeRepetido)
-                            {
-                                WriteLine("Já existe um aluno com este nome na turma de destino!");
-                            }
-                            else if (numeroRepetido)
-                            {
-                                WriteLine("Já existe um aluno com este número na turma de destino!");
+                                WriteLine("Operação cancelada.");
+                                ReadKey();
+                                Clear();
+                                return;
                             }
                             else
                             {
-                                alunoTurma[index] = novaTurma;
-                                ForegroundColor = ConsoleColor.Green;
-                                WriteLine($"Turma do aluno {alunos[index]} (Nº {numeroAlunos[index]}) atualizada para {novaTurma} com sucesso!");
-                                ResetColor();
+                                WriteLine("Entrada inválida! Cancelando a operação...");
+                                ReadKey();
+                                Clear();
+                                return;
                             }
                         }
                         else
                         {
-                            WriteLine("A turma especificada não existe! Cadastre a turma primeiro.");
+                            while (true)
+                            {
+                                WriteLine("Insira a nova turma para qual o(a) aluno(a) será inserido(a):");
+                                novaTurma = ReadLine();
+                                if (!string.IsNullOrWhiteSpace(novaTurma))
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    WriteLine("O nome da turma não pode estar vazio. Por favor, insira um nome válido.");
+                                }
+
+                            }
+                            if (turmas.Contains(novaTurma))
+                            {
+                                bool nomeRepetido = false;
+                                for (int i = 0; i < alunos.Count; i++)
+                                {
+                                    if (i != index && alunos[i] == alunos[index] && alunoTurma[i] == novaTurma)
+                                    {
+                                        nomeRepetido = true;
+                                        break;
+                                    }
+                                }
+
+                                bool numeroRepetido = false;
+                                for (int i = 0; i < numeroAlunos.Count; i++)
+                                {
+                                    if (i != index && numeroAlunos[i] == numeroAlunos[index] && alunoTurma[i] == novaTurma)
+                                    {
+                                        numeroRepetido = true;
+                                        break;
+                                    }
+                                }
+
+                                if (nomeRepetido)
+                                {
+                                    WriteLine("Já existe um aluno com este nome na turma de destino!");
+                                }
+                                else if (numeroRepetido)
+                                {
+                                    WriteLine("Já existe um aluno com este número na turma de destino!");
+                                }
+                                else
+                                {
+                                    alunoTurma[index] = novaTurma;
+                                    ForegroundColor = ConsoleColor.Green;
+                                    WriteLine($"Turma do aluno {alunos[index]} (Nº {numeroAlunos[index]}) atualizada para {novaTurma} com sucesso!");
+                                    ResetColor();
+                                }
+                            }
+                            else
+                            {
+                                WriteLine("A turma especificada não existe! Cadastre a turma primeiro.");
+                            }
                         }
+                        
                         break;
 
                     case 2:
@@ -1739,7 +1779,7 @@ namespace MyNamespace
                 WriteLine("<<<<<<< LEITURA REALIZADA COM SUCESSO! >>>>>>>");
                 ResetColor();
             }
-            catch (Exception e)
+            catch (Exception e) 
             {
                 WriteLine($"Erro ao carregar os dados: {e.Message}");
             }
@@ -1750,6 +1790,11 @@ namespace MyNamespace
                 Clear();
                 WriteLine("<<<<<<<< MENU >>>>>>>>");
             }
+        }
+
+        private static void sair()
+        {
+            Environment.Exit(0);
         }
     }
 }
