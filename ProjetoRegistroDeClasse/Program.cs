@@ -1780,7 +1780,6 @@ namespace MyNamespace
                 ReadKey();
                 return;
             }
-
             try
             {
                 alunos.Clear();
