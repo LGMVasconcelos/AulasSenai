@@ -1468,13 +1468,28 @@ namespace MyNamespace
             if (alunos.Count == 0)
             {
                 WriteLine("Nenhum aluno cadastrado no sistema.");
+                WriteLine("Pressione qualquer tecla para voltar ao menu...");
+                ReadKey();
+                return;
             }
-            else
+
+            WriteLine($"{"Nome e número",-20} | {"Turma",-10} | {"Nota 1",-7} | {"Nota 2",-7} | {"Média",-7} | {"Situação",-12}");
+            WriteLine(new string('-', 70));
+
+            for (int i = 0; i < alunos.Count; i++)
             {
-                for (int i = 0; i < alunos.Count; i++)
+                if (media[i] == 0)
                 {
-                    WriteLine($"Aluno: {alunos[i]} (Nº {numeroAlunos[i]}) | Turma: {alunoTurma[i]} | Média: {media[i]}");
+                    ForegroundColor = ConsoleColor.Red;
                 }
+                else if (media[i] == 10)
+                {
+                    ForegroundColor = ConsoleColor.Green;
+                }
+
+                string situacao = media[i] >= 7 ? "Aprovado" : (media[i] >= 5 ? "Recuperação" : "Reprovado");
+                WriteLine($"{alunos[i]} nº {numeroAlunos[i],-10} | {alunoTurma[i],-10} | {n1[i],-7:F1} | {n2[i],-7:F1} | {media[i],-7:F1} | {situacao,-12}");
+                ResetColor();
             }
 
             WriteLine();
@@ -1484,6 +1499,7 @@ namespace MyNamespace
             WriteLine("<<<<<<<< MENU >>>>>>>>");
         }
 
+
         private static void exibirRec()
         {
             Clear();
@@ -1492,12 +1508,23 @@ namespace MyNamespace
             WriteLine("=============================================");
             WriteLine();
 
+            if (alunos.Count == 0)
+            {
+                WriteLine("Nenhum aluno cadastrado no sistema.");
+                WriteLine("Pressione qualquer tecla para voltar ao menu...");
+                ReadKey();
+                return;
+            }
+
             bool encontrou = false;
+            WriteLine($"{"Nome e número",-20} | {"Turma",-10} | {"Nota 1",-7} | {"Nota 2",-7} | {"Média",-7} | {"Situação",-12}");
+            WriteLine(new string('-', 60));
+
             for (int i = 0; i < media.Count; i++)
             {
                 if (media[i] >= 5 && media[i] < 7)
                 {
-                    WriteLine($"Aluno: {alunos[i]} (Nº {numeroAlunos[i]}) | Turma: {alunoTurma[i]} | Média: {media[i]}");
+                    WriteLine($"{alunos[i]} nº {numeroAlunos[i],-10} | {alunoTurma[i],-10} | {n1[i],-7:F1} | {n2[i],-7:F1} | {"Recuperação",-12}");
                     encontrou = true;
                 }
             }
@@ -1514,6 +1541,7 @@ namespace MyNamespace
             WriteLine("<<<<<<<< MENU >>>>>>>>");
         }
 
+
         private static void exibirRep()
         {
             Clear();
@@ -1522,7 +1550,18 @@ namespace MyNamespace
             WriteLine("=============================================");
             WriteLine();
 
+            if (alunos.Count == 0)
+            {
+                WriteLine("Nenhum aluno cadastrado no sistema.");
+                WriteLine("Pressione qualquer tecla para voltar ao menu...");
+                ReadKey();
+                return;
+            }
+
             bool encontrou = false;
+            WriteLine($"{"Nome e número",-20} | {"Turma",-10} | {"Nota 1",-7} | {"Nota 2",-7} | {"Média",-7} | {"Situação",-12}");
+            WriteLine(new string('-', 60));
+
             for (int i = 0; i < media.Count; i++)
             {
                 if (media[i] < 5)
@@ -1532,7 +1571,7 @@ namespace MyNamespace
                         ForegroundColor = ConsoleColor.Red;
                     }
 
-                    WriteLine($"Aluno: {alunos[i]} (Nº {numeroAlunos[i]}) | Turma: {alunoTurma[i]} | Média: {media[i]}");
+                    WriteLine($"{alunos[i]} nº {numeroAlunos[i],-10} | {alunoTurma[i],-10} | {n1[i],-7:F1} | {n2[i],-7:F1} | {"Reprovado",-12}");
                     ResetColor();
                     encontrou = true;
                 }
@@ -1550,6 +1589,7 @@ namespace MyNamespace
             WriteLine("<<<<<<<< MENU >>>>>>>>");
         }
 
+
         private static void exibirApr()
         {
             Clear();
@@ -1558,7 +1598,18 @@ namespace MyNamespace
             WriteLine("=============================================");
             WriteLine();
 
+            if (alunos.Count == 0)
+            {
+                WriteLine("Nenhum aluno cadastrado no sistema.");
+                WriteLine("Pressione qualquer tecla para voltar ao menu...");
+                ReadKey();
+                return;
+            }
+
             bool encontrou = false;
+            WriteLine($"{"Nome e número",-20} | {"Turma",-10} | {"Nota 1",-7} | {"Nota 2",-7} | {"Média",-7} | {"Situação",-12}");
+            WriteLine(new string('-', 60));
+
             for (int i = 0; i < media.Count; i++)
             {
                 if (media[i] >= 7)
@@ -1568,7 +1619,7 @@ namespace MyNamespace
                         ForegroundColor = ConsoleColor.Green;
                     }
 
-                    WriteLine($"Aluno: {alunos[i]} (Nº {numeroAlunos[i]}) | Turma: {alunoTurma[i]} | Média: {media[i]}");
+                    WriteLine($"{alunos[i]} nº {numeroAlunos[i],-10} | {alunoTurma[i],-10} | {n1[i],-7:F1} | {n2[i],-7:F1} | {"Aprovado",-12}");
                     ResetColor();
                     encontrou = true;
                 }
