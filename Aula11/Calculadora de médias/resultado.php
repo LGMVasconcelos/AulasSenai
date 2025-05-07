@@ -6,6 +6,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <title>Calculadora de notas</title>
+    <style>
+        #apr {
+            color: green;
+        }
+
+        #rep {
+            color: red;
+        }
+        </style>
 </head>
 
 <body>
@@ -32,13 +41,10 @@
                     echo "<br/> Primeira nota do aluno: <b>$nota1</b><hr/> Segunda nota do aluno: <b>$nota2</b><hr/> Terceira nota do aluno: <b>$nota3</b><hr/> Média do aluno: <b>$media</b><br/>";
                     echo "<br/><h4><b>RESULTADO FINAL:</b></h4>";
                     if ($media >= 7) {
-                        echo "<br/><h4><b>ALUNO APROVADO!</b></h4>";
-                    } elseif ($media >= 5 && $media < 7) {
-                        echo "<br/><h4><b>ALUNO EM RECUPERAÇÃO!</b></h4>";
+                        echo "<br/><h4 id=apr><b>ALUNO APROVADO!</b></h4>";
                     } else {
-                        echo "<br/><h4><b>ALUNO REPROVADO!</b></h4>";
+                        echo "<br/><h4 id=rep><b>ALUNO REPROVADO!</b></h4>";
                     }
-                    
                     echo "<br/><a href='index.php' class='btn btn-outline-success' tabindex='-1' role='button'>VOLTAR</a>";
                     ?>
                 </div>
