@@ -30,6 +30,15 @@
                     $media = ($nota1 + $nota2 + $nota3) / 3;
                     $media = number_format($media, 1, '.', '');
                     echo "<br/> Primeira nota do aluno: <b>$nota1</b><hr/> Segunda nota do aluno: <b>$nota2</b><hr/> Terceira nota do aluno: <b>$nota3</b><hr/> Média do aluno: <b>$media</b><br/>";
+                    echo "<br/><h4><b>RESULTADO FINAL:</b></h4>";
+                    if ($media >= 7) {
+                        echo "<br/><h4><b>ALUNO APROVADO!</b></h4>";
+                    } elseif ($media >= 5 && $media < 7) {
+                        echo "<br/><h4><b>ALUNO EM RECUPERAÇÃO!</b></h4>";
+                    } else {
+                        echo "<br/><h4><b>ALUNO REPROVADO!</b></h4>";
+                    }
+                    
                     echo "<br/><a href='index.php' class='btn btn-outline-success' tabindex='-1' role='button'>VOLTAR</a>";
                     ?>
                 </div>
