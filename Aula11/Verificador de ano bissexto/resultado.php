@@ -25,7 +25,6 @@
                     <?php
                     $ano = $_POST['ano'];
                     $era = $ano < 0 ? "a.C." : "d.C.";
-                    $ano = abs($ano); 
 
                     if (($ano % 4 == 0 && $ano % 100 != 0) || ($ano % 400 == 0)) {
                         echo "<h3 style='color:green;'>O ano <b>$ano $era</b> é bissexto!</h3>";
