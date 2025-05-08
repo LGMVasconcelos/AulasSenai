@@ -112,7 +112,7 @@ correspondente:
                         <input class="form-control" type="number" name="idade" required placeholder="Digite sua idade abaixo" />
                         <hr />
 
-                        <label class="form-label">Digite um valor numérico para somar, subtrair, dividir ou multiplicar por ele.</label>
+                        <label class="form-label">Digite dois valores numéricos. O primeiro valor irá somar, subtrair, dividir ou multiplicar pelo segundo.</label>
                         <input class="form-control" type="number" name="num1" required placeholder="Digite um valor" />
                         <br />
                         <input class="form-control" type="number" name="num2" required placeholder="Digite um valor" />
@@ -154,7 +154,7 @@ correspondente:
                         <input class="form-control" type="number" name="ano" placeholder="Digite aqui o ano" required>
                         <hr />
 
-                        <label class="form-label">Digite novamente um valor numérico para somar, subtrair, dividir ou multiplicar por ele.</label>
+                        <label class="form-label">Digite novamente dois valores numéricos. O primeiro valor irá somar, subtrair, dividir ou multiplicar pelo segundo.</label>
                         <input class="form-control" type="number" name="num1v2" required placeholder="Digite um valor" />
                         <br />
                         <input class="form-control" type="number" name="num2v2" required placeholder="Digite um valor" />
