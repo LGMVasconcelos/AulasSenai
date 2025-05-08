@@ -154,7 +154,7 @@ correspondente:
                         <input class="form-control" type="number" name="ano" placeholder="Digite aqui o ano" required>
                         <hr />
 
-                        <label class="form-label">Digite novamente dois valores numéricos. O primeiro valor irá somar, subtrair, dividir ou multiplicar pelo segundo.</label>
+                        <label class="form-label">Digite novamente um valor numérico para somar, subtrair, dividir ou multiplicar por ele.</label>
                         <input class="form-control" type="number" name="num1v2" required placeholder="Digite um valor" />
                         <br />
                         <input class="form-control" type="number" name="num2v2" required placeholder="Digite um valor" />
@@ -318,8 +318,60 @@ correspondente:
                                             case 'u':
                                                 echo "<br/> O caractere <b>$caractere</b> é uma vogal!<br/>";
                                                 break;
-                                            default:
+                                            case 'b':
+                                            case 'c':
+                                            case 'd':
+                                            case 'f':
+                                            case 'g':
+                                            case 'h':
+                                            case 'j':
+                                            case 'k':
+                                            case 'l':
+                                            case 'm':
+                                            case 'n':
+                                            case 'p':
+                                            case 'q':
+                                            case 'r':
+                                            case 's':
+                                            case 't':
+                                            case 'v':
+                                            case 'w':
+                                            case 'x':
+                                            case 'y':
+                                            case 'z':
                                                 echo "<br/> O caractere <b>$caractere</b> é uma consoante!<br/>";
+                                                break;
+                                            case 'á':
+                                            case 'é':
+                                            case 'í':
+                                            case 'ó':
+                                            case 'ú':
+                                                echo "<br/> O caractere <b>$caractere</b> é uma vogal acentuada!<br/>";
+                                                break;
+                                            case 'ã':
+                                            case 'õ':
+                                                echo "<br/> O caractere <b>$caractere</b> é uma vogal nasal!<br/>";
+                                                break;
+                                            case 'ç':
+                                                echo "<br/> O caractere <b>$caractere</b> é uma consoante com cedilha!<br/>";
+                                                break;
+                                            case 'â':
+                                            case 'ê':
+                                            case 'î':
+                                            case 'ô':
+                                                echo "<br/> O caractere <b>$caractere</b> é uma vogal com acento circunflexo!<br/>";
+                                                break;
+                                            case 'à':
+                                            case 'è':
+                                            case 'ì':
+                                            case 'ò':
+                                                echo "<br/> O caractere <b>$caractere</b> é uma vogal com acento grave!<br/>";
+                                                break;
+                                            case 'ü':
+                                                echo "<br/> O caractere <b>$caractere</b> é uma vogal com trema!<br/>";
+                                                break;
+                                            default:
+                                                echo "<br/> O caractere <b>$caractere</b> não está no alfabeto!<br/>";
                                         }
                                     }
                                     ?>
