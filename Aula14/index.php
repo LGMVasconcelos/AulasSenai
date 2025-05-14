@@ -98,7 +98,7 @@
                             <?php
                             $exercicio3 = [1, 2, 3, 4, 5];
                             $inverso = array_reverse($exercicio3);
-                            echo "<p><b>Exercício 3:</b> O array invertido é: " . implode(", ", $inverso) . ".</p>";
+                            echo "<p><b>Exercício 3:</b> O array invertido é: [" . implode(", ", $inverso) . "].</p>";
                             ?>
                             <hr />
                             <?php
@@ -114,15 +114,21 @@
                             <hr />
                             <?php
                             $exercicio5 = [
-                                "João" => 20,
-                                "Maria" => 17,
-                                "Pedro" => 22,
-                                "Ana" => 15
+                            ["nome" => "João", "idade" => 20],
+                            ["nome" => "Maria", "idade" => 17],
+                            ["nome" => "Pedro", "idade" => 22],
+                            ["nome" => "Ana", "idade" => 15]
                             ];
-                            $maioresDe18 = array_filter($exercicio5, function ($idade) {
-                                return $idade > 18;
+                            function virgulaOuE($exercicio5) {
+                                if (count($exercicio5) > 1) {
+                                    return implode(", ", array_slice($exercicio5, 0, -1)) . " e " . end($exercicio5);
+                                }
+                                return $exercicio5[0];
+                            }
+                            $maioresDeIdade = array_filter($exercicio5, function ($pessoa) {
+                                return $pessoa["idade"] > 18;
                             });
-                            echo "<p><b>Exercício 5:</b> Nomes das pessoas com mais de 18 anos: " . implode(", ", array_keys($maioresDe18)) . ".</p>";
+                            echo "<p><b>Exercício 5:</b> Pessoas maiores de 18 anos: " . virgulaOuE(array_column($maioresDeIdade, "nome")) . ".</p>";
                             ?>
                             <hr />
                             <?php
@@ -134,20 +140,26 @@
                             <hr />
                             <?php
                             $exercicio7 = ["banana", "maçã", "laranja"];
-                            $maiusculas = array_map('strtoupper', $exercicio7);
-                            echo "<p><b>Exercício 7:</b> Array em maiúsculas: " . implode(", ", $maiusculas) . ".</p>";
+                            $maiusculas = array_map('mb_strtoupper', $exercicio7);
+                            echo "<p><b>Exercício 7:</b> Array em maiúsculas: [" . implode(", ", $maiusculas) . "].</p>";
                             ?>
                             <hr />
                             <?php
                             $exercicio8 = [1, 2, 2, 3, 4, 4, 5];
                             $semDuplicatas = array_unique($exercicio8);
-                            echo "<p><b>Exercício 8:</b> Array sem duplicatas: " . implode(", ", $semDuplicatas) . ".</p>";
+                            echo "<p><b>Exercício 8:</b> Array sem duplicatas: [" . implode(", ", $semDuplicatas) . "].</p>";
                             ?>
                             <hr />
                             <?php
                             $exercicio9 = [10, 20, 30, 40, 50];
                             $contagem = count($exercicio9);
-                            echo "<p><b>Exercício 9:</b> O número de elementos no array é: $contagem.</p>";
+                            function virgulaOuE1($exercicio9) {
+                                if (count($exercicio9) > 1) {
+                                    return implode(", ", array_slice($exercicio9, 0, -1)) . " e " . end($exercicio9);
+                                }
+                                return $exercicio9[0];
+                            }
+                            echo "<p><b>Exercício 9:</b> O array contém $contagem elementos: " . virgulaOuE1($exercicio9) . ".</p>";
                             ?>
                             <hr />
                             <?php
@@ -160,7 +172,14 @@
                                 return $aluno["nota"] > 6;
                             });
                             $nomesAprovados = array_column($aprovados, "nome");
-                            echo "<p><b>Exercício 10:</b> Alunos com nota maior que 6: " . implode(", ", $nomesAprovados) . ".</p>";
+
+                            function virgulaOuE2($exercicio10) {
+                                if (count($exercicio10) > 1) {
+                                    return implode(", ", array_slice($exercicio10, 0, -1)) . " e " . end($exercicio10);
+                                }
+                                return $exercicio10[0];
+                            }
+                            echo "<p><b>Exercício 10:</b> Alunos aprovados: " . virgulaOuE2($nomesAprovados) . ".</p>";
                             ?>
                             <hr />
                             <?php
@@ -169,20 +188,26 @@
                                 "França" => "Paris",
                                 "Japão" => "Tóquio"
                             ];
-                            echo "<p><b>Exercício 11:</b> Capitais: " . implode(", ", $exercicio11) . ".</p>";
+                            function virgulaOuE3($exercicio11) {
+                                if (count($exercicio11) > 1) {
+                                    return implode(", ", array_slice($exercicio11, 0, -1)) . " e " . end($exercicio11);
+                                }
+                                return $exercicio11[0];
+                            }
+                            echo "<p><b>Exercício 11:</b> Capitais: " . virgulaOuE3($exercicio11) . ".</p>";
                             ?>
                             <hr />
                             <?php
                             $exercicio12a = [1, 2, 3];
                             $exercicio12b = [4, 5, 6];
                             $mesclado = array_merge($exercicio12a, $exercicio12b);
-                            echo "<p><b>Exercício 12:</b> Array mesclado: " . implode(", ", $mesclado) . ".</p>";
+                            echo "<p><b>Exercício 12:</b> Array mesclado: [" . implode(", ", $mesclado) . "].</p>";
                             ?>
                             <hr />
                             <?php
                             $exercicio13 = [9, 3, 6, 1];
                             sort($exercicio13);
-                            echo "<p><b>Exercício 13:</b> Array ordenado: " . implode(", ", $exercicio13) . ".</p>";
+                            echo "<p><b>Exercício 13:</b> Array ordenado: [" . implode(", ", $exercicio13) . "].</p>";
                             ?>
                             <hr />
                             <?php
@@ -190,7 +215,13 @@
                             $pares = array_filter($exercicio14, function ($numero) {
                                 return $numero % 2 == 0;
                             });
-                            echo "<p><b>Exercício 14:</b> Números pares: " . implode(", ", $pares) . ".</p>";
+                            function virgulaOuE4($exercicio14) {
+                                if (count($exercicio14) > 1) {
+                                    return implode(", ", array_slice($exercicio14, 0, -1)) . " e " . end($exercicio14);
+                                }
+                                return $exercicio14[0];
+                            }
+                            echo "<p><b>Exercício 14:</b> Números pares: " . virgulaOuE4($pares) . ".</p>";
                             ?>
                             <hr />
                             <?php
