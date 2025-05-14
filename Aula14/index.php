@@ -1,3 +1,9 @@
+<?php
+$exibindo = false;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $exibindo = true;
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -200,18 +206,44 @@
                             echo "<p><b>Exercício 15:</b> String resultante: $string.</p>";
                             ?>
                         </div>
-                        <button class="btn btn-primary" onclick="mostrarResultados()">Mostrar Resultados</button>
+                        <button type="submit" name="toggle_resultados" class="btn btn-outline-secondary" id="toggleButton">
+                            <?php echo $exibindo ? 'Ocultar resultados' : 'Exibir resultados'; ?>
+                        </button>
+
+                        <script>
+                            var resultados = document.getElementById('resultados');
+                            resultados.style.display = <?php echo $exibindo ? "'block'" : "'none'"; ?>;
+
+                            document.getElementById('toggleButton').addEventListener('click', function(e) {
+                                e.preventDefault();
+                                if (resultados.style.display === 'none') {
+                                    resultados.style.display = 'block';
+                                    this.textContent = 'Ocultar resultados';
+                                    var input = document.createElement('input');
+                                    input.type = 'hidden';
+                                    input.name = 'exibir_resultados';
+                                    input.value = '1';
+                                    this.form.appendChild(input);
+                                } else {
+                                    resultados.style.display = 'none';
+                                    this.textContent = 'Exibir resultados';
+
+                                    var input = document.createElement('input');
+                                    input.type = 'hidden';
+                                    input.name = 'ocultar_resultados';
+                                    input.value = '1';
+                                    this.form.appendChild(input);
+                                }
+
+                                this.form.submit();
+                            });
+                        </script>
+                        <form action="index.php" method="post">
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-
-        <script>
-            function mostrarResultados() {
-                document.getElementById('resultados').style.display = 'block';
-            }
-        </script>
-    </div>
     </div>
     </div>
     </div>
