@@ -178,7 +178,6 @@ $nomes = $_SESSION['nomes'];
         </div>
     </div>
 
-    <!-- Modal de Pesquisa -->
     <div class="modal fade" id="pesquisaModal" tabindex="-1" aria-labelledby="pesquisaModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -215,7 +214,6 @@ $nomes = $_SESSION['nomes'];
         </div>
     </div>
 
-    <!-- Modal de Resultado da Pesquisa -->
     <div class="modal fade" id="resultadoModal" tabindex="-1" aria-labelledby="resultadoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -276,7 +274,6 @@ $nomes = $_SESSION['nomes'];
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Script para edição de usuários
             const botoesEditar = document.querySelectorAll('.editar-btn');
             botoesEditar.forEach(function(botao) {
                 botao.addEventListener('click', function() {
@@ -293,7 +290,6 @@ $nomes = $_SESSION['nomes'];
                 });
             });
 
-            // Mostrar modal de resultado se uma pesquisa foi realizada
             <?php if ($pesquisaRealizada): ?>
                 var resultadoModal = new bootstrap.Modal(document.getElementById('resultadoModal'));
                 resultadoModal.show();
