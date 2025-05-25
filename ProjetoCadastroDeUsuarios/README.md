@@ -1,6 +1,6 @@
 # Sistema de Cadastro de Usuários
 
-Um sistema completo de registro de usuários feito apenas com **arrays** em PHP, ideal para estudos e projetos didáticos!
+Segundo projeto do curso. Um sistema completo de registro de usuários feito apenas com **arrays** em PHP!
 
 ## Funcionalidades
 
