@@ -1,0 +1,16 @@
+C:\Users\Aluno\source\repos\AppIntro\bin\Debug\net8.0-windows\AppIntro.exe
+C:\Users\Aluno\source\repos\AppIntro\bin\Debug\net8.0-windows\AppIntro.deps.json
+C:\Users\Aluno\source\repos\AppIntro\bin\Debug\net8.0-windows\AppIntro.runtimeconfig.json
+C:\Users\Aluno\source\repos\AppIntro\bin\Debug\net8.0-windows\AppIntro.dll
+C:\Users\Aluno\source\repos\AppIntro\bin\Debug\net8.0-windows\AppIntro.pdb
+C:\Users\Aluno\source\repos\AppIntro\obj\Debug\net8.0-windows\AppIntro.csproj.GenerateResource.cache
+C:\Users\Aluno\source\repos\AppIntro\obj\Debug\net8.0-windows\AppIntro.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Aluno\source\repos\AppIntro\obj\Debug\net8.0-windows\AppIntro.AssemblyInfoInputs.cache
+C:\Users\Aluno\source\repos\AppIntro\obj\Debug\net8.0-windows\AppIntro.AssemblyInfo.cs
+C:\Users\Aluno\source\repos\AppIntro\obj\Debug\net8.0-windows\AppIntro.csproj.CoreCompileInputs.cache
+C:\Users\Aluno\source\repos\AppIntro\obj\Debug\net8.0-windows\AppIntro.dll
+C:\Users\Aluno\source\repos\AppIntro\obj\Debug\net8.0-windows\refint\AppIntro.dll
+C:\Users\Aluno\source\repos\AppIntro\obj\Debug\net8.0-windows\AppIntro.pdb
+C:\Users\Aluno\source\repos\AppIntro\obj\Debug\net8.0-windows\AppIntro.genruntimeconfig.cache
+C:\Users\Aluno\source\repos\AppIntro\obj\Debug\net8.0-windows\ref\AppIntro.dll
+C:\Users\Aluno\source\repos\AppIntro\obj\Debug\net8.0-windows\AppIntro.frmIntro.resources
